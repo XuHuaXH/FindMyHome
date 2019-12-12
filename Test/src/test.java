@@ -1,3 +1,3 @@
 public class test {
-// this is for commite test only, feel free to revise / delete
+// this is for commit test only, feel free to revise / delete
 }
