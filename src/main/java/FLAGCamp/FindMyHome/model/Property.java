@@ -25,6 +25,14 @@ public class Property {
     @JsonIgnore
     private Manager manager;
 
+    @ManyToOne
+    @JoinColumn(name = "viewerId")
+    private Viewer viewer;
+
+    @ManyToOne
+    @JoinColumn(name = "favById")
+    private Viewer favBy;
+
     @OneToOne(mappedBy = "property")
     private Address address;
 

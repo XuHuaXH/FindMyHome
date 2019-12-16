@@ -2,6 +2,7 @@ package FLAGCamp.FindMyHome.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "viewer")
@@ -19,13 +20,13 @@ public class Viewer {
     private User user;
 
     @OneToMany(mappedBy = "viewer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Route> commuteRoutes;
+    private Set<Route> commuteRoutes;
 
     @OneToMany(mappedBy = "viewer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Property> favPropertyList;
+    private Set<Property> favPropertyList;
 
     @OneToMany(mappedBy = "viewer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private List<Property> historyPropertyList;
+    private Set<Property> historyPropertyList;
 
     public int getId() {
         return id;
@@ -67,27 +68,27 @@ public class Viewer {
         this.user = user;
     }
 
-    public List<Route> getCommuteRoutes() {
+    public Set<Route> getCommuteRoutes() {
         return commuteRoutes;
     }
 
-    public void setCommuteRoutes(List<Route> commuteRoutes) {
+    public void setCommuteRoutes(Set<Route> commuteRoutes) {
         this.commuteRoutes = commuteRoutes;
     }
 
-    public List<Property> getFavPropertyList() {
+    public Set<Property> getFavPropertyList() {
         return favPropertyList;
     }
 
-    public void setFavPropertyList(List<Property> favPropertyList) {
+    public void setFavPropertyList(Set<Property> favPropertyList) {
         this.favPropertyList = favPropertyList;
     }
 
-    public List<Property> getHistoryPropertyList() {
+    public Set<Property> getHistoryPropertyList() {
         return historyPropertyList;
     }
 
-    public void setHistoryPropertyList(List<Property> historyPropertyList) {
+    public void setHistoryPropertyList(Set<Property> historyPropertyList) {
         this.historyPropertyList = historyPropertyList;
     }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "route")
@@ -14,10 +15,12 @@ public class Route {
     private int id;
     private String name;
     private String departureTime;
-    private List<String> days;
+    @ElementCollection
+    private Set<String> days;
+    @ElementCollection
     private List<String> travelModes;
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
     private List<Node> nodes;
 
     @ManyToOne
@@ -48,11 +51,11 @@ public class Route {
         this.departureTime = departureTime;
     }
 
-    public List<String> getDays() {
+    public Set<String> getDays() {
         return days;
     }
 
-    public void setDays(List<String> days) {
+    public void setDays(Set<String> days) {
         this.days = days;
     }
 
