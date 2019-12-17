@@ -1,9 +1,11 @@
 package FLAGCamp.FindMyHome.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Table(name = "address")
 public class Address {
@@ -28,12 +30,10 @@ public class Address {
     @JsonIgnore
     private Property property;
 
+
+
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getStreetNo() {
