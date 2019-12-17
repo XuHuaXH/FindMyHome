@@ -21,6 +21,7 @@ public class Address {
     private String zipCode;
     private double latitude;
     private double longitude;
+    private long zone;
 
     @OneToOne
     @JsonIgnore
