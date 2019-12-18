@@ -1,14 +1,18 @@
 package FLAGCamp.FindMyHome.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "route")
 public class Route {
@@ -23,7 +27,7 @@ public class Route {
     @ElementCollection
     private List<String> travelModes;
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Node> nodes;
 
     @ManyToOne

@@ -1,7 +1,9 @@
 package FLAGCamp.FindMyHome.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +11,8 @@ import java.util.Set;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "viewer")
 public class Viewer {
@@ -25,13 +29,13 @@ public class Viewer {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(mappedBy = "viewer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Route> commuteRoutes;
 
-    @OneToMany(mappedBy = "viewer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Property> favPropertyList;
 
-    @OneToMany(mappedBy = "viewer", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<Property> historyPropertyList;
 
 }

@@ -39,7 +39,7 @@ public class Property {
     @JoinColumn(name = "favById")
     private Viewer favBy;
 
-    @OneToOne(mappedBy = "property", cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.ALL)
     private Address address;
 
 }
