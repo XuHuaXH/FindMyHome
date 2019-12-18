@@ -24,10 +24,10 @@ public class User {
 
     private String password;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Viewer viewer;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Manager manager;
 
 }
