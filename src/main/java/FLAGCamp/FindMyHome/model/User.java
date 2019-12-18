@@ -26,5 +26,4 @@ public class User {
     @OneToOne(mappedBy = "user")
     private Manager manager;
 
-
 }
