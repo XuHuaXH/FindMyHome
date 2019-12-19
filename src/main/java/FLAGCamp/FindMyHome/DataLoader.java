@@ -2,7 +2,7 @@ package FLAGCamp.FindMyHome;
 
 import FLAGCamp.FindMyHome.model.Address;
 import FLAGCamp.FindMyHome.model.Property;
-import FLAGCamp.FindMyHome.model.PropertyRepo;
+import FLAGCamp.FindMyHome.dao.PropertyRepo;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

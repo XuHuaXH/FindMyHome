@@ -11,8 +11,6 @@ public class FakeController {
         return "{\"totalResult\":3,\"SearchLat\":37.802452,\"SearchLong\":-122.417227,\"SearchKeyWord\": \"" + keyword + "\",\"results\":[{\"uuid\":\"1\",\"Address\":\"950 Lombard St, San Francisco, CA 94133\",\"Lat\":37.802452,\"Long\":-122.417227,\"Price\":40500000,\"Bedroom\":6,\"Bathroom\":8,\"area\":9495,\"Like\":true},{\"uuid\":\"2\",\"Address\":\"2698 Pacific Ave, San Francisco, CA 94115\",\"Lat\":37.793122,\"Long\":-122.439469,\"Price\":26800000,\"Bedroom\":6,\"Bathroom\":8,\"area\":10734,\"Like\":false},{\"uuid\":\"3\",\"Address\":\"870 Harrison St UNIT 305, San Francisco, CA 94107\",\"Lat\":37.779807,\"Long\":-122.401351,\"Price\":466345,\"Bedroom\":2,\"Bathroom\":1,\"area\":889,\"Like\":false}]}";
     }
     //a sample change
-    //2
-
 
     @GetMapping("/liked")
     public String liked(){

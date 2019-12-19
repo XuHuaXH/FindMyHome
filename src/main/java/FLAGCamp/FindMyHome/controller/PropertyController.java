@@ -1,7 +1,7 @@
 package FLAGCamp.FindMyHome.controller;
 
 import FLAGCamp.FindMyHome.model.Property;
-import FLAGCamp.FindMyHome.model.PropertyRepo;
+import FLAGCamp.FindMyHome.dao.PropertyRepo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

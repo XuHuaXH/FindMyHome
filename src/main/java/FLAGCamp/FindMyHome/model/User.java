@@ -18,10 +18,9 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private String emailId;
-
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)

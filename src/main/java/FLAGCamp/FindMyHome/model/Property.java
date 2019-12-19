@@ -27,6 +27,7 @@ public class Property {
     private int area;
     private int noBedroom;
     private int noBathroom;
+    private long zone;
 
     @ManyToOne
     private Manager manager;
