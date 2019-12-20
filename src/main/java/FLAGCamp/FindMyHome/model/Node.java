@@ -19,6 +19,7 @@ public class Node {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    private String name;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Address address;

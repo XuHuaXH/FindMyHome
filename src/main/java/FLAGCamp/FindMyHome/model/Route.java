@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 @Data
@@ -21,7 +22,7 @@ public class Route {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private String departureTime;
+    private LocalTime departureTime;
     @ElementCollection
     private Set<String> days;
     @ElementCollection
