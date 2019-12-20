@@ -2,6 +2,7 @@ FLAGCamp/FindMyHome/RouteDataLoader.class
 FLAGCamp/FindMyHome/FindMyHomeApplication.class
 FLAGCamp/FindMyHome/dao/RouteRepo.class
 FLAGCamp/FindMyHome/controller/FakeController.class
+FLAGCamp/FindMyHome/model/TravelTimeResponse$TravelTimeResponseBuilder.class
 FLAGCamp/FindMyHome/controller/UserController.class
 FLAGCamp/FindMyHome/model/Viewer$ViewerBuilder.class
 FLAGCamp/FindMyHome/model/Manager.class
@@ -21,6 +22,7 @@ FLAGCamp/FindMyHome/model/Node.class
 FLAGCamp/FindMyHome/JWT/JWTAuthenticationFilter.class
 FLAGCamp/FindMyHome/SecurityConfig.class
 FLAGCamp/FindMyHome/model/Address.class
+FLAGCamp/FindMyHome/model/TravelTimeResponse.class
 FLAGCamp/FindMyHome/model/Route$RouteBuilder.class
 FLAGCamp/FindMyHome/DataLoader.class
 FLAGCamp/FindMyHome/dao/PropertyRepo.class
@@ -30,5 +32,6 @@ FLAGCamp/FindMyHome/jackson/LoginForm.class
 FLAGCamp/FindMyHome/controller/UserController$UserControllerBuilder.class
 FLAGCamp/FindMyHome/model/User.class
 FLAGCamp/FindMyHome/JWT/UserDetailsServiceImpl.class
+FLAGCamp/FindMyHome/DistanceMatrixClient.class
 FLAGCamp/FindMyHome/model/Property$PropertyBuilder.class
 FLAGCamp/FindMyHome/model/Manager$ManagerBuilder.class

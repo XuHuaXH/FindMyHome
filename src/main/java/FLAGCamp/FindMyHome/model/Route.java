@@ -1,17 +1,17 @@
 package FLAGCamp.FindMyHome.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,10 +24,11 @@ public class Route {
     private String name;
     private LocalTime departureTime;
     @ElementCollection
-    private Set<String> days;
+    private List<String> days;
     @ElementCollection
     private List<String> travelModes;
 
+    @Embedded
     @OneToMany(cascade = CascadeType.ALL)
     private List<Node> nodes;
 

@@ -42,6 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilter(new JWTLoginFilter(authenticationManager()))
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()));
+
+        // Allow access to h2-console during development
+        // TODO: Remove this configuration before shipping
+        http.headers().frameOptions().disable();
+
     }
 
     @Override

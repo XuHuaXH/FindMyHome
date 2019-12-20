@@ -33,8 +33,8 @@ public class FakeController {
                 "  \"routes\": [\n" +
                 "    {\n" +
                 "      \"id\": 5,\n" +
-                "      \"name\": \"preloaded route\",\n" +
-                "      \"departureTime\": \"08:00\",\n" +
+                "      \"name\": \"fake route\",\n" +
+                "      \"departureTime\": \"07:30:00\",\n" +
                 "      \"days\": [\n" +
                 "        \"Monday\",\n" +
                 "        \"Friday\",\n" +

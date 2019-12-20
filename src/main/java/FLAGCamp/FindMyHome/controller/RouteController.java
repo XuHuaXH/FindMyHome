@@ -1,6 +1,8 @@
 package FLAGCamp.FindMyHome.controller;
 
+import FLAGCamp.FindMyHome.model.Address;
 import FLAGCamp.FindMyHome.model.Route;
+import FLAGCamp.FindMyHome.model.TravelTimeResponse;
 import FLAGCamp.FindMyHome.service.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +31,10 @@ public class RouteController {
     public void deleteRoute(@RequestBody Map<String, Integer> map) {
         int routeId = map.get("routeId");
         service.deleteRoute(routeId);
+    }
+
+    @PostMapping("/estimate-travel-time")
+    public List<TravelTimeResponse> getTravelTime(@RequestBody Address address) {
+        return service.getTravelTime(address);
     }
 }
