@@ -18,6 +18,7 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private int id;
     private int streetNo;
     private String roadName;

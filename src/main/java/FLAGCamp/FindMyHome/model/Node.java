@@ -18,6 +18,7 @@ public class Node {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private int id;
     private String name;
 
