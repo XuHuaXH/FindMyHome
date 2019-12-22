@@ -20,7 +20,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
     private int id;
-    private int streetNo;
+    private Integer streetNo;
     private String roadName;
     private String city;
     private String state;
