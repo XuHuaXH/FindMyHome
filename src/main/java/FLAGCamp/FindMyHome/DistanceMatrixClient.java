@@ -43,7 +43,7 @@ public class DistanceMatrixClient {
         return ld.with(TemporalAdjusters.next(dayOfWeek));
     }
 
-    public String toReadableTime(long numOfSeconds) {
+    private String toReadableTime(long numOfSeconds) {
         final long SECONDS_IN_HOUR = 3600;
         final long SECONDS_IN_MINUTE = 60;
         StringBuilder bd = new StringBuilder();

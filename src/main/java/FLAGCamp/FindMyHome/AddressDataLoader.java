@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 public class AddressDataLoader {
     private static final String BASE_URL = "http://localhost:8080";
-    public static final MediaType JSON
+    private static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
-    public static String readFile() throws IOException {
+    private static String readFile() throws IOException {
 
         String file = "src/main/resources/static/data/addresses-us-all.json";
         BufferedReader reader = new BufferedReader(new FileReader(file));
