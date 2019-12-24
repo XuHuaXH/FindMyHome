@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Data
@@ -22,6 +23,15 @@ public class User {
 
     private String emailId;
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<Route> commuteRoutes;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<Property> favPropertyList;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    private Set<Property> historyPropertyList;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Viewer viewer;

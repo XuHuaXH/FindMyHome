@@ -29,13 +29,13 @@ public class Viewer {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Route> commuteRoutes;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Property> favPropertyList;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Set<Property> historyPropertyList;
+//    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+//    private Set<Route> commuteRoutes;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+//    private Set<Property> favPropertyList;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+//    private Set<Property> historyPropertyList;
 
 }

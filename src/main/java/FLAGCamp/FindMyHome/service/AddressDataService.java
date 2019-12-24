@@ -67,10 +67,14 @@ public class AddressDataService {
     private Property buildProperty(Address address) {
         int noBathroom = randomInt(2, 10);
         int noBedroom = randomInt(noBathroom + 1, noBathroom + 3);
+        double utilityCost = (double)randomInt(80, 300);
+        double maintenanceCost = (double)randomInt(100, 400);
         double price = randomPrice();
         return Property.builder()
                 .noBathroom(noBathroom)
                 .noBedroom(noBedroom)
+                .utilityCost(utilityCost)
+                .maintenanceCost(maintenanceCost)
                 .price(price)
                 .area(randomArea())
                 .description("A Simple Description")

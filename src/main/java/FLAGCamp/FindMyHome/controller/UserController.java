@@ -3,6 +3,7 @@ package FLAGCamp.FindMyHome.controller;
 import FLAGCamp.FindMyHome.dao.UserRepo;
 import FLAGCamp.FindMyHome.jackson.LoginForm;
 import FLAGCamp.FindMyHome.jackson.RegisterationForm;
+import FLAGCamp.FindMyHome.model.Property;
 import FLAGCamp.FindMyHome.model.User;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Builder
 @Controller
@@ -54,6 +56,5 @@ public class UserController {
         Collection<User> res = repo.findAll();
         return res;
     }
-
 
 }
