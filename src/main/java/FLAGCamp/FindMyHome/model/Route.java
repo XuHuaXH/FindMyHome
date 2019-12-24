@@ -20,7 +20,7 @@ public class Route {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     private String name;
     private LocalTime departureTime;
     @ElementCollection
@@ -34,6 +34,6 @@ public class Route {
 
     @ManyToOne
     @JsonIgnore
-    private Viewer viewer;
+    private User user;
 
 }

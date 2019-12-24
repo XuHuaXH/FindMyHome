@@ -30,12 +30,12 @@ public class Property {
     private Manager manager;
 
     @ManyToOne
-    @JoinColumn(name = "viewerId")
-    private Viewer viewer;
+    @JoinColumn(name = "userId")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "favById")
-    private Viewer favBy;
+    private User favBy;
 
     @OneToOne(cascade=CascadeType.ALL)
     private Address address;
