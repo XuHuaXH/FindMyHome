@@ -35,7 +35,7 @@ public class PropertyController {
     }
 
     @PostMapping("/like")
-    public Map<String, String> likeProperty(HttpServletRequest request, @RequestBody Map<String, Integer> body) {
+    public Map<String, String> likeProperty(HttpServletRequest request, @RequestBody Map<String, Long> body) {
         String emailId = JWTUserAuthHelper.TokenToUser(request);
         User user = userRepo.findByEmailId(emailId);
         long id = body.get("id");
