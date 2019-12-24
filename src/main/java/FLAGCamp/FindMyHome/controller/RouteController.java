@@ -4,6 +4,7 @@ import FLAGCamp.FindMyHome.JWT.JWTUserAuthHelper;
 import FLAGCamp.FindMyHome.model.Address;
 import FLAGCamp.FindMyHome.model.Route;
 import FLAGCamp.FindMyHome.model.TravelTimeResponse;
+import FLAGCamp.FindMyHome.model.User;
 import FLAGCamp.FindMyHome.service.RouteService;
 import io.jsonwebtoken.JwtHandlerAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
