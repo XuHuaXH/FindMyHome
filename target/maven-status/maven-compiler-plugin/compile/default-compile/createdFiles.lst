@@ -1,2 +1,4 @@
+FLAGCamp/FindMyHome/Util/GeoLocation.class
 FLAGCamp/FindMyHome/JWT/JWTUserAuthHelper.class
 FLAGCamp/FindMyHome/controller/SearchController.class
+FLAGCamp/FindMyHome/service/SearchService.class

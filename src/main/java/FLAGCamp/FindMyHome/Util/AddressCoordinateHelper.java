@@ -28,8 +28,8 @@ public class AddressCoordinateHelper {
             e.printStackTrace();
         }
 
-        String quary = String.format("address=%s&key=%s", address, API_KEY);
-        String url = HOST + PATH + "?" + quary;
+        String query = String.format("address=%s&key=%s", address, API_KEY);
+        String url = HOST + PATH + "?" + query;
         StringBuilder responseBody = new StringBuilder();
 
 
