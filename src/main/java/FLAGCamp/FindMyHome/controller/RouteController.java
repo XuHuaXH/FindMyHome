@@ -53,8 +53,9 @@ public class RouteController {
     }
 
     @PostMapping("/estimate-travel-time")
-    public List<TravelTimeResponse> getTravelTime(@RequestBody Address address, HttpServletRequest request) {
+    public List<TravelTimeResponse> getTravelTime(@RequestBody Map<String, Long> map, HttpServletRequest request) {
+        long routeId = map.get("id");
         String emailId = JWTUserAuthHelper.TokenToUser(request);
-        return service.getTravelTime(address, emailId);
+        return service.getTravelTime(routeId, emailId);
     }
 }

@@ -1,6 +1,7 @@
 package FLAGCamp.FindMyHome.service;
 
 import FLAGCamp.FindMyHome.DistanceMatrixClient;
+import FLAGCamp.FindMyHome.dao.PropertyRepo;
 import FLAGCamp.FindMyHome.dao.RouteRepo;
 import FLAGCamp.FindMyHome.dao.UserRepo;
 import FLAGCamp.FindMyHome.model.*;
@@ -9,12 +10,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class RouteService {
 
     @Autowired RouteRepo routeRepo;
+    @Autowired PropertyRepo propertyRepo;
     @Autowired UserRepo userRepo;
 
     public List<Route> getRoutes(String emailId) {
@@ -54,10 +55,14 @@ public class RouteService {
         return "OK";
     }
 
-    public List<TravelTimeResponse> getTravelTime(Address address, String emailId) {
-        User user = userRepo.findByEmailId(emailId);
+    public List<TravelTimeResponse> getTravelTime(long propertyId, String emailId) {
         List<TravelTimeResponse> response = new ArrayList<>();
-        Node home = Node.builder().name("home").address(address).build();
+        if (!propertyRepo.findById(propertyId).isPresent()) {
+            return response;
+        }
+
+        Property property = propertyRepo.findById(propertyId).get();
+        Node home = Node.builder().name("home").address(property.getAddress()).build();
 
         List<Route> routes = getRoutes(emailId);
 
