@@ -49,7 +49,7 @@ export default function TemporaryDrawer(props) {
             onKeyDown={toggleDrawer(side, false)}
         >
             <List>
-                {['Search', 'Starred', 'Owned'].map((text, index) => (
+                {['Search', 'Starred', 'Owned', 'Profile'].map((text, index) => (
                     <ListItem button onClick={() => handleSetMainState(text)} value="123" key={text}>
                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                         <ListItemText primary={text} />

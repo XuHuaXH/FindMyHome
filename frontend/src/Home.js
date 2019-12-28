@@ -1,78 +1,81 @@
-import React from "react";
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import RaisedButton from 'material-ui/RaisedButton';
-import AppBar from "material-ui/AppBar";
-import TextField from "material-ui/TextField";
+import React from 'react';
+import './App.css';
+import RouterPage from "./Router"
+import TemporaryDrawer from "./Drawer"
+import ButtonAppBar from "./AppBar"
+import MainShowPage from "./Main"
 import axios from 'axios';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 import PropertyCard from "./PropertyCard"
 
 class Home extends React.Component {
+    state = {
+        "loginToken": "",
+        "displayState": "Welcome To FindMyHome!",
+        "drawerIsOpen": false,
+        "searchWord": "",
+        "searchRange": 50,
+        "markers": [],
+        "displayedProperties": [],
+        "mapCenter": {lat: 40.854885, lng: -88.081807}
+    };
 
-    constructor(props){
-        super(props);
-        this.state={
-            displayedProperties:[],
-            keyword:'',
-            range:''
-        }
+    handleDrawerOpen = (value) => {
+        this.setState(prevState => ({
+            drawerIsOpen: !prevState.drawerIsOpen
+        }))
     }
 
-    componentWillMount(){
-        let properties=[];
-        // properties.push(<SearchBox parentContext={this} appContext={this.props.parentContext}/>);
+    handleSearchWordChange = (value) => {
+        this.setState({"searchWord": value})
+    }
+
+    handleSetMainState = (value) => {
+        this.setState({"displayState": value})
+    }
+
+    handleSetToken = (value) => {
+        this.setState({"loginToken": value})
+        localStorage.setItem('token', value)
+    }
+
+    onMarkerClick = (props, marker, e) => {
         this.setState({
-            displayedProperties: properties
-        })
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+        });
     }
 
-
-    render() {
-        return (
-            <div>
-                <MuiThemeProvider>
-                    <div>
-                        <AppBar
-                            title="Search"
-                        />
-                        <TextField
-                            hintText="Enter a keyword to search"
-                            floatingLabelText="Keyword"
-                            onChange = {(event,newValue) => this.setState({keyword:newValue})}
-                        />
-                        <br/>
-                        <TextField
-                            hintText="Enter a range in miles"
-                            floatingLabelText="range"
-                            onChange = {(event,newValue) => this.setState({range:newValue})}
-                        />
-                        <br/>
-                        <RaisedButton label="Search" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
-                    </div>
-                </MuiThemeProvider>
-                {this.state.displayedProperties}
-            </div>
-        );
-    }
-
-    handleClick(event){
+    handleSearch = (value) => {
         let url = "/search";
+        this.setState({"displayState": "Search"})
 
-        axios.get(url + "?keyword=" + this.state.keyword + "&range=" + this.state.range)
+        axios.get(url + "?keyword=" + this.state.searchWord + "&range=" + this.state.searchRange)
             .then((response) => {
                 console.log(response);
-                if(response.status === 200){
+                if (response.status === 200) {
                     console.log("Search successful");
-                }
-                else{
+                } else {
                     console.log("An error occurred");
                 }
 
                 // display the search results
                 let properties = [];
+                let dmarkers = []
                 let numOfResults = response.data.length;
                 for (let i = 0; i < numOfResults; ++i) {
                     let data = response.data[i];
+                    if (i == 0) {
+                        this.setState({"mapCenter":{lat: data.address.latitude, lng: data.address.longitude}})
+                    }
+                    dmarkers.push(<Marker key={i}
+                                          position={{lat: data.address.latitude, lng: data.address.longitude}}
+                                          name={data.name}
+                                          onclick={this.onMarkerClick}/>
+                    )
                     properties.push(<PropertyCard
+                        key={data.id}
                         id={data.id}
                         price={data.price}
                         description={data.description}
@@ -83,7 +86,8 @@ class Home extends React.Component {
                         zipCode={data.address.zipCode}
                     />);
                 }
-                this.setState({displayedProperties:properties});
+                this.setState({markers: dmarkers})
+                this.setState({displayedProperties: properties});
             })
             .catch(function (error) {
                 console.log(error);
@@ -91,9 +95,78 @@ class Home extends React.Component {
 
     }
 
+
+    handleLike = () => {
+        let url = "/api/liked";
+        let token = localStorage.getItem("token");
+        const options = {
+            headers: {'Authorization': token}
+        };
+
+        axios.get(url, options)
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    console.log("get like successful");
+                } else {
+                    console.log("An error occurred");
+                }
+
+                // display the search results
+                let properties = [];
+                let dmarkers = []
+                let numOfResults = response.data.length;
+                for (let i = 0; i < numOfResults; ++i) {
+                    let data = response.data[i];
+                    if (i == 0) {
+                        this.setState({"mapCenter":{lat: data.address.latitude, lng: data.address.longitude}})
+                    }
+                    dmarkers.push(<Marker key={i}
+                                          position={{lat: data.address.latitude, lng: data.address.longitude}}
+                                          name={data.name}
+                                          onClick = { this.onMarkerClick }/>)
+                    properties.push(<PropertyCard
+                        key={data.id}
+                        id={data.id}
+                        price={data.price}
+                        description={data.description}
+                        streetNo={data.address.streetNo}
+                        roadName={data.address.roadName}
+                        city={data.address.city}
+                        state={data.address.state}
+                        zipCode={data.address.zipCode}
+                    />);
+                }
+                this.setState({markers: dmarkers})
+                this.setState({displayedProperties: properties});
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.displayState !== prevState.displayState) {
+            if(this.state.displayState == "Starred"){
+                this.handleLike()
+            }
+        }
+    }
+
+
+    render() {
+        return (
+            <div className="App">
+                <ButtonAppBar handleDrawerOpen={this.handleDrawerOpen} loginToken={this.state.loginToken}
+                              handleSetToken={this.handleSetToken} handleSearchWordChange={this.handleSearchWordChange}
+                              handleSearch={this.handleSearch} />
+                <TemporaryDrawer drawerIsOpen={this.state.drawerIsOpen} handleDrawerOpen={this.handleDrawerOpen}
+                                 handleSetMainState={this.handleSetMainState} handleLike={this.handleLike}/>
+                <MainShowPage displayState={this.state.displayState} markers={this.state.markers} mapCenter={this.state.mapCenter} displayedProperties={this.state.displayedProperties}/>
+            </div>
+        );
+    }
 }
 
-const style = {
-    margin: 15,
-};
+
 export default Home;
