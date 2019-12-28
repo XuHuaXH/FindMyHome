@@ -22,6 +22,7 @@ public class PropertyController {
         this.propertyRepo = propertyRepo;
     }
 
+
     @GetMapping("/properties")
     Collection<Property> groups(){
         return propertyRepo.findAll();

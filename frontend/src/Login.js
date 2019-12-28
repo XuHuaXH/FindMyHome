@@ -19,6 +19,9 @@ class Login extends React.Component {
             <div>
                 <MuiThemeProvider>
                     <div>
+                        <AppBar
+                            title="Login"
+                        />
                         <TextField
                             hintText="Enter your Username"
                             floatingLabelText="Username"

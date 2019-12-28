@@ -1,4 +1,10 @@
 import React from "react";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 import {
     BrowserRouter as Router,
     Switch,
@@ -21,32 +27,26 @@ class RouterPage extends React.Component {
 
     render() {
         return (
-            <Router>
-                <div>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <Link to="/login">Login</Link>
-                        </li>
-                        <li>
-                            <Link to="/register">Register</Link>
-                        </li>
-                        <li>
-                            <Link to="/profile">Profile</Link>
-                        </li>
-                    </ul>
-
-                    <hr />
-
-                    {/*
-          A <Switch> looks through all its children <Route>
-          elements and renders the first one whose path
-          matches the current URL. Use a <Switch> any time
-          you have multiple routes, but you want only one
-          of them to render at a time
-        */}
+            <div>
+                <Router>
+                    <AppBar position="static">
+                        <Toolbar>
+                                <div>
+                                    <Button color="primary" style={{display: "inline"}}>
+                                        <Link style={{textDecoration: 'none', color:'white'}} to="/">Home</Link>
+                                    </Button>
+                                    <Button style={{display: "inline"}}>
+                                        <Link style={{textDecoration: 'none', color:'white'}} to="/login">Login</Link>
+                                    </Button>
+                                    <Button style={{display: "inline"}}>
+                                        <Link style={{textDecoration: 'none', color:'white'}} to="/register">Register</Link>
+                                    </Button>
+                                    <Button style={{display: "inline"}}>
+                                        <Link style={{textDecoration: 'none', color:'white'}} to="/profile">Profile</Link>
+                                    </Button>
+                                </div>
+                        </Toolbar>
+                    </AppBar>
                     <Switch>
                         <Route exact path="/">
                             <Home />
@@ -62,8 +62,8 @@ class RouterPage extends React.Component {
                         </Route>
                         <Route path="/property-details/:id" component={PropertyDetails} />
                     </Switch>
-                </div>
-            </Router>
+                </Router>
+            </div>
         );
     }
 }
