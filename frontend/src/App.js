@@ -1,36 +1,43 @@
-import React, {Component} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import RouterPage from "./Router"
+import TemporaryDrawer from "./Drawer"
+import ButtonAppBar from "./AppBar"
+import MainShowPage from "./Main"
 
-class App extends Component {
-
-    state = {};
-
-    componentDidMount() {
-        setInterval(this.hello, 250);
-    }
-
-    hello = () => {
-        fetch('/api/hello')
-            .then(response => response.text())
-            .then(message => {
-                this.setState({message: message});
-            });
+class App extends React.Component {
+    state = {
+        "loginToken" : "",
+        "displayState": "index",
+        "drawerIsOpen": false
     };
 
-    render() {
-        return (
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">{this.state.message}</h1>
-                </header>
-                <p className="App-intro">
-                    To get started, edit <code>src/App.js</code> and save to reload.
-                </p>
-            </div>
-        );
+    handleDrawerOpen = (value) => {
+        this.setState(prevState => ({
+            drawerIsOpen: !prevState.drawerIsOpen
+        }))
     }
+
+    handleSetMainState = (value) => {
+        this.setState({"displayState": value})
+    }
+
+    handleSetToken = (value) => {
+        this.setState({"loginToken": value})
+    }
+
+
+
+  render() {
+    return (
+        <div className="App">
+          <ButtonAppBar handleDrawerOpen = {this.handleDrawerOpen} loginToken={this.state.loginToken} handleSetToken={this.handleSetToken} />
+          <TemporaryDrawer drawerIsOpen = {this.state.drawerIsOpen} handleDrawerOpen = {this.handleDrawerOpen} handleSetMainState = {this.handleSetMainState}/>
+          <MainShowPage PageType={this.state.displayState}/>
+        </div>
+    );
+  }
 }
+
 
 export default App;
