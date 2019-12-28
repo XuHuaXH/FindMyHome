@@ -10,13 +10,15 @@ import Grid from "@material-ui/core/Grid"
 export default class MainShowPage extends React.Component {
 
     static propTypes = {
-        PageType: PropTypes.string.isRequired
+        displayState: PropTypes.string.isRequired
     }
 
     state = {
         propertyList: {},
         searchKeyWord: ""
     }
+
+
 
     render() {
         const useStyles = makeStyles(theme => ({
@@ -34,13 +36,13 @@ export default class MainShowPage extends React.Component {
             <div className="main">
                 <Paper>
                     <Grid container spacing={0}>
-                        <Grid item xs={8}>
-                            <MapContainer />
+                        <Grid item xs={8} style={{position: 'relative', height: '92vh'}}>
+                            <MapContainer markers={this.props.markers} mapCenter={this.props.mapCenter} />
                         </Grid>
-                        <Grid item xs={4}>
-                            <PList className="pList"/>
+                        <Grid item xs={4} style={{position: 'relative', height: '92vh'}}>
+                            <PList displayState={this.props.displayState} displayedProperties={this.props.displayedProperties} className="pList"/>
                         </Grid>
-                        {this.props.PageType}
+                        {/*{this.props.PageType}*/}
                     </Grid>
                 </Paper>
             </div>
