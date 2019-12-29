@@ -10,18 +10,52 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
+import axios from "axios"
 
 
-class RouteCard extends React.Component {
+class TravelTimeCard extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            displayedNodes: []
+            displayedNodes: [],
+            optimisticTime: '',
+            pessimisticTime: ''
         }
     }
 
     componentDidMount() {
+
+        // request backend for travel time estimation
+        let url = "/api/estimate-travel-time";
+        let payload = {
+            "id" : this.props.id
+        }
+        let token = localStorage.getItem("token");
+        const options = {
+            headers: {'Authorization': token}
+        };
+
+        axios.post(url, payload, options)
+            .then((response) => {
+                console.log(response);
+                let optimisticTime = response.data[this.props.index].optimisticTime;
+                let pessimisticTime = response.data[this.props.index].pessimisticTime;
+                console.log(optimisticTime);
+                console.log(pessimisticTime);
+                this.setState({
+                    optimisticTime: optimisticTime,
+                    pessimisticTime: pessimisticTime
+                }, this.displayRoutes);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
+    displayRoutes = () => {
+        // display user saved routes
         let displayedNodes = [];
         let route = this.props.route;
         let modes = this.props.route.travelModes;
@@ -44,7 +78,7 @@ class RouteCard extends React.Component {
                     </StepLabel>
                     <StepContent>
                         <Typography style={styles.title} color="textSecondary">
-                            {modes[i]} to
+                            {this.state.optimisticTime} - {this.state.pessimisticTime}
                         </Typography>
                     </StepContent>
                 </Step>
@@ -131,4 +165,4 @@ const styles = {
     }
 }
 
-export default RouteCard;
+export default TravelTimeCard;

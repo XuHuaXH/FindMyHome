@@ -79,7 +79,7 @@ class Profile extends React.Component {
         let addressIndex = this.state.addressList.length;
         let newInput =
             <div>
-                <Typography>Origin</Typography>
+                <Typography>Stop {addressIndex + 1}</Typography>
                 <TextField id="standard-basic" label="Address" onChange = {
                     (event) => {
                         const addresses = this.state.addressList;
@@ -127,7 +127,7 @@ class Profile extends React.Component {
                             <TextField id="standard-basic" label="Name" />
                             <TextField id="standard-basic" label="Departure Time" />
                             {this.state.nodeInputForms}
-                            <Button variant="contained" color="primary" onClick={() => this.addNode()}>
+                            <Button variant="contained" color="primary" style={styles} onClick={() => this.addNode()}>
                                 Add a stop
                             </Button>
                         </form>

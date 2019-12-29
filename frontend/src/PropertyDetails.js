@@ -2,6 +2,8 @@ import React from "react";
 import ImageCarousel from "./ImageCarousel"
 import axios from 'axios';
 import Typography from "@material-ui/core/Typography"
+import Grid from '@material-ui/core/Grid';
+import TravelTimeCard from "./TravelTimeCard"
 
 class PropertyDetails extends React.Component {
     constructor(props) {
@@ -13,12 +15,13 @@ class PropertyDetails extends React.Component {
             maintenanceCost: '',
             area: '',
             noBedroom: '',
-            noBathroom: ''
-
+            noBathroom: '',
+            commuteRoutes:[]
         }
     }
 
     componentDidMount() {
+
         // send request to backend for property details
         let url = "/property-details?id=";
         let id = this.props.match.params.id;
@@ -42,6 +45,39 @@ class PropertyDetails extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
+
+        // remote request to get user's saved routes
+        url = "/api/route";
+        let token = localStorage.getItem("token");
+        const options = {
+            headers: {'Authorization': token}
+        };
+
+        axios.get(url, options)
+            .then((response) => {
+                console.log(response);
+
+                // display the returned routes
+                let routes = [];
+                let numOfResults = response.data.length;
+                for (let i = 0; i < numOfResults; ++i) {
+                    let route = response.data[i];
+                    routes.push(
+                        <Grid item xs={6}>
+                            <TravelTimeCard
+                                route={route}
+                                id={this.props.match.params.id}
+                                index={i}
+                            />
+                        </Grid>
+                    );
+                }
+                this.setState({commuteRoutes:routes});
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
 
     }
 
@@ -68,7 +104,9 @@ class PropertyDetails extends React.Component {
                 <Typography style={styles.pos} color="textSecondary">
                     Maintenance Cost: {this.state.maintenanceCost}
                 </Typography>
-
+                <Grid style={styles.grid} container spacing={3}>
+                    {this.state.commuteRoutes}
+                </Grid>
             </div>
         );
     }
