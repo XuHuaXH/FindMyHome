@@ -44,10 +44,12 @@ class Profile extends React.Component {
                 let numOfResults = response.data.length;
                 for (let i = 0; i < numOfResults; ++i) {
                     let route = response.data[i];
+                    let id = route.id;
                     routes.push(
                         <Grid item xs={6}>
                             <RouteCard
                                 route={route}
+                                id={id}
                             />
                         </Grid>
                     );

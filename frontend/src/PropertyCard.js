@@ -48,9 +48,9 @@ class PropertyCard extends React.Component {
                     />
                 </CardContent>
                 <CardActions>
-                    {/*<Link to={"/property-details/"+id}>*/}
-                    {/*<Button size="small">View Details</Button>*/}
-                    {/*</Link>*/}
+                    <Link to={"/property-details/"+id}>
+                    <Button size="small">View Details</Button>
+                    </Link>
                 </CardActions>
             </Card>
         );

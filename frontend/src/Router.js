@@ -35,9 +35,9 @@ class RouterPage extends React.Component {
                                     <Button color="primary" style={{display: "inline"}}>
                                         <Link style={{textDecoration: 'none', color:'white'}} to="/">Home</Link>
                                     </Button>
-                                    <Button style={{display: "inline"}}>
-                                        <Link style={{textDecoration: 'none', color:'white'}} to="/login">Login</Link>
-                                    </Button>
+                                    {/*<Button style={{display: "inline"}}>*/}
+                                    {/*    <Link style={{textDecoration: 'none', color:'white'}} to="/login">Login</Link>*/}
+                                    {/*</Button>*/}
                                     <Button style={{display: "inline"}}>
                                         <Link style={{textDecoration: 'none', color:'white'}} to="/register">Register</Link>
                                     </Button>
@@ -51,9 +51,9 @@ class RouterPage extends React.Component {
                         <Route exact path="/">
                             <Home />
                         </Route>
-                        <Route path="/login">
-                            <Login />
-                        </Route>
+                        {/*<Route path="/login">*/}
+                        {/*    <Login />*/}
+                        {/*</Route>*/}
                         <Route path="/register">
                             <Register />
                         </Route>

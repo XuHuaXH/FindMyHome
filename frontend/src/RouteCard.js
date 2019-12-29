@@ -10,6 +10,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import StepContent from '@material-ui/core/StepContent';
+import axios from "axios";
 
 
 class RouteCard extends React.Component {
@@ -100,10 +101,33 @@ class RouteCard extends React.Component {
                     </CardContent>
                     <CardActions>
                         <RaisedButton label="Edit" primary={true} style={styles}/>
+                        <RaisedButton label="Delete" primary={true} style={styles} onClick={() => this.deleteRoute()}/>
                     </CardActions>
                 </Card>
             </MuiThemeProvider>
         );
+    }
+
+    deleteRoute = () => {
+
+        // // remote request to delete a route
+        // let url = "/api/route";
+        // let payload = {
+        //     "id" : this.props.id
+        // }
+        // let token = localStorage.getItem("token");
+        // const options = {
+        //     headers: {'Authorization': token}
+        // };
+        //
+        // axios.delete(url, options, payload)
+        //     .then((response) => {
+        //         console.log(response);
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
+        // this.componentDidMount();
     }
 
     addressToString = (address) => {

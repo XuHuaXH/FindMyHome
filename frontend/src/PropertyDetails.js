@@ -85,7 +85,11 @@ class PropertyDetails extends React.Component {
 
         return(
             <div>
-                <ImageCarousel />
+                <Grid style={styles.grid} justify="center" container spacing={3}>
+                    <Grid style={styles.grid} item spacing={3}>
+                        <ImageCarousel />
+                    </Grid>
+                </Grid>
                 <Typography style={styles.pos} color="textSecondary">
                     Address: {this.state.address}
                 </Typography>
@@ -116,6 +120,10 @@ const styles = {
     pos: {
         marginBottom: 12,
     },
+    grid: {
+        marginBottom: 20,
+        marginTop: 20
+    }
 }
 
 export default PropertyDetails;
