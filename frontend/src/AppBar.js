@@ -125,7 +125,6 @@ export default function ButtonAppBar(props) {
                 <RaisedButton label="Logout!" primary={true}  onClick={() => handleLogout()}/>
                 </MuiThemeProvider>
 
-            {/*    TODO: add user detail page here*/}
             </Popover>
         </div>
     }

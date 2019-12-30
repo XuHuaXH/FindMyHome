@@ -4,6 +4,7 @@ import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
 
 class Login extends React.Component {
     constructor(props){
@@ -52,24 +53,22 @@ class Login extends React.Component {
         }
         axios.post(url, payload)
             .then((response) => {
-                //console.log(response);
                 if(response.status === 200){
                     console.log("Login successful");
                     let token = response.headers.authorization;
-                    this.props.handleSetToken(token)
                     localStorage.setItem('token', token);
+                    this.props.loginAction();
+                    this.props.history.push('/');
                 }
             })
             .catch(function (error) {
                 console.log(error);
                 //TODO: add false message
             });
-        this.props.handleClose()
-
     }
 }
 const style = {
     margin: 15,
 };
-export default Login;
+export default withRouter(Login);
 

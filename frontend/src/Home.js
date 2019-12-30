@@ -147,7 +147,7 @@ class Home extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.displayState !== prevState.displayState) {
-            if(this.state.displayState == "Starred"){
+            if(this.state.displayState === "Starred"){
                 this.handleLike()
             }
         }

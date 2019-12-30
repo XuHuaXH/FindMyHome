@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import RouterPage from "./Router"
+import {BrowserRouter} from "react-router-dom";
 
 class App extends React.Component {
     constructor(props){
@@ -10,9 +11,11 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
-                <RouterPage />
-            </div>
+            <BrowserRouter>
+                <div className="App">
+                    <RouterPage />
+                </div>
+            </BrowserRouter>
         );
     }
 }
