@@ -48,7 +48,7 @@ class PropertyCard extends React.Component {
                     />
                 </CardContent>
                 <CardActions>
-                    <Link to={"/property-details/"+id}>
+                    <Link to={"/property-details/"+id} style={{textDecoration: 'none'}}>
                     <Button size="small">View Details</Button>
                     </Link>
                 </CardActions>

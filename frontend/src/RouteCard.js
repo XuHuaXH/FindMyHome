@@ -50,7 +50,7 @@ class RouteCard extends React.Component {
                     </StepContent>
                 </Step>
             );
-        }
+    }
 
         // process the last node
         let node = route.nodes[numOfNodes - 1];
@@ -69,9 +69,9 @@ class RouteCard extends React.Component {
                 </StepLabel>
             </Step>
         );
-        this.setState({
+        this.setState( {
             displayedNodes:displayedNodes
-        })
+        });
     }
 
 
@@ -110,24 +110,23 @@ class RouteCard extends React.Component {
 
     deleteRoute = () => {
 
-        // // remote request to delete a route
-        // let url = "/api/route";
-        // let payload = {
-        //     "id" : this.props.id
-        // }
-        // let token = localStorage.getItem("token");
-        // const options = {
-        //     headers: {'Authorization': token}
-        // };
-        //
-        // axios.delete(url, options, payload)
-        //     .then((response) => {
-        //         console.log(response);
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
-        // this.componentDidMount();
+        // remote request to delete a route
+        let url = "/api/route";
+        let payload = {
+            "id" : this.props.id
+        }
+        let token = localStorage.getItem("token");
+        const options = {
+            headers: {'Authorization': token}
+        };
+
+        axios.delete(url, { data: { "id" : this.props.id }, headers: { "Authorization": token } })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     addressToString = (address) => {

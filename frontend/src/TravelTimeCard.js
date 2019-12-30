@@ -134,6 +134,7 @@ class TravelTimeCard extends React.Component {
                     </CardContent>
                     <CardActions>
                         <RaisedButton label="Edit" primary={true} style={styles}/>
+                        <RaisedButton label="Delete" primary={true} style={styles} onClick={() => this.deleteRoute()}/>
                     </CardActions>
                 </Card>
             </MuiThemeProvider>
