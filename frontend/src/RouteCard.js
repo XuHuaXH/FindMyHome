@@ -123,6 +123,7 @@ class RouteCard extends React.Component {
         axios.delete(url, { data: { "id" : this.props.id }, headers: { "Authorization": token } })
             .then((response) => {
                 console.log(response);
+                this.props.renderAction();
             })
             .catch(function (error) {
                 console.log(error);

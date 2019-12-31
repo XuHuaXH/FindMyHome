@@ -3,6 +3,8 @@ import PItem from "./PItem"
 import List from "@material-ui/core/List"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
+import SearchBar from "./SearchBar"
+import AppBar from "@material-ui/core/AppBar/AppBar"
 
 
 export default class PList extends React.Component {
@@ -30,22 +32,27 @@ export default class PList extends React.Component {
                 margin: 15
             }
         }
-        let toRender
+        let toRender = [];
         if(this.props.displayedProperties.length === 0){
             if (this.props.displayState === "Welcome To FindMyHome!"){
-                toRender=<Typography style={styles.pos} color="textSecondary">
-                    Search Something To Get Started!
-                </Typography>
-            }else {
-                toRender =
+                toRender.push(
+                    <Typography style={styles.pos} color="textSecondary">
+                        Search Something To Get Started!
+                    </Typography>
+                )
+            } else {
+                toRender.push(
                     <Typography style={styles.pos} color="textSecondary">
                         It's empty! Try Search Something Else?
                     </Typography>
+                )
             }
-        }else{
-            toRender= <List>
-                {this.props.displayedProperties}
-            </List>
+        } else {
+            toRender.push(
+                <List>
+                    {this.props.displayedProperties}
+                </List>
+            )
         }
         return(<div>
             <Typography style={styles.pos} variant="h4" color="textSecondary">

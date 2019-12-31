@@ -126,6 +126,7 @@ class Home extends React.Component {
                                           name={data.name}
                                           onClick = { this.onMarkerClick }/>)
                     properties.push(<PropertyCard
+                        liked={false}
                         key={data.id}
                         id={data.id}
                         price={data.price}
@@ -160,8 +161,8 @@ class Home extends React.Component {
                 <ButtonAppBar handleDrawerOpen={this.handleDrawerOpen} loginToken={this.state.loginToken}
                               handleSetToken={this.handleSetToken} handleSearchWordChange={this.handleSearchWordChange}
                               handleSearch={this.handleSearch} />
-                <TemporaryDrawer drawerIsOpen={this.state.drawerIsOpen} handleDrawerOpen={this.handleDrawerOpen}
-                                 handleSetMainState={this.handleSetMainState} handleLike={this.handleLike}/>
+                {/*<TemporaryDrawer drawerIsOpen={this.state.drawerIsOpen} handleDrawerOpen={this.handleDrawerOpen}*/}
+                {/*                 handleSetMainState={this.handleSetMainState} handleLike={this.handleLike}/>*/}
                 <MainShowPage displayState={this.state.displayState} markers={this.state.markers} mapCenter={this.state.mapCenter} displayedProperties={this.state.displayedProperties}/>
             </div>
         );

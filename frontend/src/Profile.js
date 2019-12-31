@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import UserRoute from "./UserRoute"
+import FavProperties from "./FavProperties"
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -78,7 +79,7 @@ export default function Profile() {
                 <UserRoute />
             </TabPanel>
             <TabPanel className={classes.tabPanels} value={value} index={1}>
-                Item Two
+                <FavProperties />
             </TabPanel>
             <TabPanel className={classes.tabPanels} value={value} index={2}>
                 Item Three

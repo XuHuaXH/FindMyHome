@@ -28,7 +28,10 @@ class UserRoute extends React.Component {
     }
 
     componentDidMount() {
+        this.renderRoutes();
+    }
 
+    renderRoutes = () => {
         // remote request to get user's saved routes
         let url = "/api/route";
         let token = localStorage.getItem("token");
@@ -49,6 +52,7 @@ class UserRoute extends React.Component {
                     routes.push(
                         <Grid item xs={6}>
                             <RouteCard
+                                renderAction={this.renderRoutes}
                                 route={route}
                                 id={id}
                             />
@@ -60,8 +64,6 @@ class UserRoute extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
-
-
     }
 
     handleClickOpen = () => {

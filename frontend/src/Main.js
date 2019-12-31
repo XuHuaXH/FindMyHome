@@ -6,6 +6,8 @@ import PList from "./Plist"
 import Paper from "@material-ui/core/Paper"
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid"
+import SearchBar from "./SearchBar"
+import AppBar from '@material-ui/core/AppBar';
 
 export default class MainShowPage extends React.Component {
 
@@ -42,7 +44,6 @@ export default class MainShowPage extends React.Component {
                         <Grid item xs={4} style={{position: 'relative', height: '92vh'}}>
                             <PList displayState={this.props.displayState} displayedProperties={this.props.displayedProperties} className="pList"/>
                         </Grid>
-                        {/*{this.props.PageType}*/}
                     </Grid>
                 </Paper>
             </div>

@@ -17,10 +17,16 @@ class PropertyCard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            favIcon: <FavoriteBorderIcon/>,
-            liked: false
+            liked: this.props.liked,
+            favIcon: ''
         }
 
+    }
+
+    componentDidMount() {
+        this.setState({
+            favIcon: this.state.liked ? <FavoriteIcon/> : <FavoriteBorderIcon/>
+        });
     }
 
 
@@ -72,7 +78,7 @@ class PropertyCard extends React.Component {
 
         if (this.state.liked) {
             path = "unlike";
-            this.setState({
+            this.setState( {
                 favIcon: <FavoriteBorderIcon/>,
                 liked: false
             });
@@ -90,10 +96,12 @@ class PropertyCard extends React.Component {
         axios.post(url + path, payload, options)
             .then((response) => {
                 console.log(response);
+                this.props.renderAction();
             })
             .catch((error) => {
                 console.log(error);
             });
+
 
     }
 

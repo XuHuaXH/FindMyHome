@@ -37,7 +37,8 @@ const useStyles = makeStyles(theme => ({
         },
     },
     searchIcon: {
-        width: theme.spacing(7),
+        // width: theme.spacing(3),
+        // height: '100%',
         position: 'absolute',
         pointerEvents: 'none',
         display: 'flex',
@@ -48,29 +49,29 @@ const useStyles = makeStyles(theme => ({
         color: 'inherit',
     },
     inputInput: {
-        margin: theme.spacing(0, 3, 0, 0),
+        // padding: theme.spacing(0, 0, 0, 0),
         transition: theme.transitions.create('width'),
         width: '100%',
         [theme.breakpoints.up('md')]: {
             width: 200,
         },
-}}));
+    }}));
 
-export default function ButtonAppBar(props) {
+export default function SearchBar(props) {
     const classes = useStyles();
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+
 
     const onChange = (event) => {
         props.handleSearchWordChange(event.target.value)
     };
 
     return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
                     <div className={classes.search}>
-                        <IconButton>
-                            <SearchIcon onClick={props.handleSearch} />
-                        </IconButton>
                         <InputBase
                             placeholder="Search…"
                             classes={{
@@ -80,9 +81,9 @@ export default function ButtonAppBar(props) {
                             inputProps={{ 'aria-label': 'search' }}
                             onChange={onChange}
                         />
+                        <IconButton>
+                            <SearchIcon onClick={props.handleSearch} />
+                        </IconButton>
                     </div>
-                </Toolbar>
-            </AppBar>
-        </div>
     );
 }
