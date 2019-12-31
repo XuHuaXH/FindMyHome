@@ -19,8 +19,8 @@ class TravelTimeCard extends React.Component {
         super(props);
         this.state = {
             displayedNodes: [],
-            optimisticTime: '',
-            pessimisticTime: ''
+            optimisticTime: [],
+            pessimisticTime: []
         }
     }
 
@@ -39,6 +39,7 @@ class TravelTimeCard extends React.Component {
         axios.post(url, payload, options)
             .then((response) => {
                 console.log(response);
+                // arrays of length = number of trips in the route
                 let optimisticTime = response.data[this.props.index].optimisticTime;
                 let pessimisticTime = response.data[this.props.index].pessimisticTime;
                 console.log(optimisticTime);
@@ -78,7 +79,7 @@ class TravelTimeCard extends React.Component {
                     </StepLabel>
                     <StepContent>
                         <Typography style={styles.title} color="textSecondary">
-                            {this.state.optimisticTime} - {this.state.pessimisticTime}
+                            {this.state.optimisticTime[i]} - {this.state.pessimisticTime[i]}
                         </Typography>
                     </StepContent>
                 </Step>

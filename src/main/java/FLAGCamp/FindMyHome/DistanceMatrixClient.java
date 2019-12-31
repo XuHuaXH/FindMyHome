@@ -26,7 +26,6 @@ public class DistanceMatrixClient {
 
 
     public DistanceMatrixClient() {
-        this.context = new GeoApiContext.Builder().apiKey(API_KEY).build();
 
         dayOfWeekMap = new HashMap<>();
         dayOfWeekMap.put("Monday", DayOfWeek.MONDAY);
@@ -57,20 +56,22 @@ public class DistanceMatrixClient {
         return bd.toString();
     }
 
-    private long getAverage(List<Long> nums) {
-        long average = 0;
-        for (int i = 0; i < nums.size(); ++i) {
-            average = (average * i + nums.get(i)) / (i + 1);
-        }
-        return average;
-    }
+//    private long getAverage(List<Long> nums) {
+//        long average = 0;
+//        for (int i = 0; i < nums.size(); ++i) {
+//            average = (average * i + nums.get(i)) / (i + 1);
+//        }
+//        return average;
+//    }
 
 
     public TravelTimeResponse estimateTravelTime(Route route, Node home) {
 
+        this.context = new GeoApiContext.Builder().apiKey(API_KEY).build();
+
         List<Node> nodes = new ArrayList<>();
-        List<String> optimisticTimeAvg = new ArrayList<>();
-        List<String> pessimisticTimeAvg = new ArrayList<>();
+        List<String> optimisticTimeList = new ArrayList<>();
+        List<String> pessimisticTimeList = new ArrayList<>();
         List<BigDecimal> fare = new ArrayList<>();
         long lastOptimisticDuration = 0;
         long lastPessimisticDuration = 0;
@@ -111,58 +112,60 @@ public class DistanceMatrixClient {
 
             // set up and iterate over different departure_time instants
             // then calculate the average result
-            List<Long> optimisticTime = new ArrayList<>(); // temporary list for computing average
-            List<Long> pessimisticTime = new ArrayList<>(); // temporary list for computing average
-            for (String day : route.getDays()) {
-                LocalDate nextDate = findNext(dayOfWeekMap.get(day));
-                LocalDateTime dateTime = nextDate.atTime(route.getDepartureTime());
-                Instant optimisticInstant = dateTime.atZone(ZoneId.of(TIME_ZONE_ID)).toInstant().plusSeconds(lastOptimisticDuration);
-                Instant pessimisticInstant = dateTime.atZone(ZoneId.of(TIME_ZONE_ID)).toInstant().plusSeconds(lastPessimisticDuration);
+            String commuteDay = route.getDays().get(0);
+            LocalDate nextDate = findNext(dayOfWeekMap.get(commuteDay));
+            LocalDateTime dateTime = nextDate.atTime(route.getDepartureTime());
+            Instant optimisticInstant = dateTime.atZone(ZoneId.of(TIME_ZONE_ID)).toInstant().plusSeconds(lastOptimisticDuration);
+            Instant pessimisticInstant = dateTime.atZone(ZoneId.of(TIME_ZONE_ID)).toInstant().plusSeconds(lastPessimisticDuration);
 
-                List<TrafficModel> trafficModels = new ArrayList<>();
-                trafficModels.add(TrafficModel.OPTIMISTIC);
-                trafficModels.add(TrafficModel.PESSIMISTIC);
+            List<TrafficModel> trafficModels = new ArrayList<>();
+            trafficModels.add(TrafficModel.OPTIMISTIC);
+            trafficModels.add(TrafficModel.PESSIMISTIC);
 
-                for (TrafficModel trafficModel : trafficModels) {
+            // to store the travel time estimations of the current node-to-node trip
+            long optimisticTime = 0;
+            long pessimisticTime = 0;
 
-                    // assemble the request to Distance Matrix API
-                    DistanceMatrixApiRequest req = new DistanceMatrixApiRequest(this.context);
-                    req.origins(originLatLng)
-                            .destinations(destinationLatLng)
-                            .mode(travelMode)
-                            .trafficModel(trafficModel)
-                            .units(unit);
-                    if (trafficModel == TrafficModel.OPTIMISTIC) {
-                        req.departureTime(optimisticInstant);
-                    } else {
-                        req.departureTime(pessimisticInstant);
-                    }
+            for (TrafficModel trafficModel : trafficModels) {
 
-                    try {
-                        DistanceMatrix matrix = req.await();
-                        for (DistanceMatrixRow row : matrix.rows) {
-                            for (DistanceMatrixElement element : row.elements) {
-                                Long duration = element.durationInTraffic.inSeconds;
-                                if (trafficModel == TrafficModel.OPTIMISTIC) {
-                                    optimisticTime.add(duration);
-                                    fare.add((element.fare == null) ? new BigDecimal(0) : element.fare.value);
-                                } else {
-                                    pessimisticTime.add(duration);
-                                }
+                // assemble the request to Distance Matrix API
+                DistanceMatrixApiRequest req = new DistanceMatrixApiRequest(this.context);
+                req.origins(originLatLng)
+                        .destinations(destinationLatLng)
+                        .mode(travelMode)
+                        .trafficModel(trafficModel)
+                        .units(unit);
+                if (trafficModel == TrafficModel.OPTIMISTIC) {
+                    req.departureTime(optimisticInstant);
+                } else {
+                    req.departureTime(pessimisticInstant);
+                }
+
+                try {
+                    DistanceMatrix matrix = req.await();
+                    for (DistanceMatrixRow row : matrix.rows) {
+                        for (DistanceMatrixElement element : row.elements) {
+                            Long duration = element.durationInTraffic.inSeconds;
+                            if (trafficModel == TrafficModel.OPTIMISTIC) {
+                                optimisticTime = duration;
+                                fare.add((element.fare == null) ? new BigDecimal(0) : element.fare.value);
+                            } else {
+                                pessimisticTime = duration;
                             }
                         }
-                    } catch (ApiException | InterruptedException | IOException e) {
-                        e.printStackTrace();
                     }
+                } catch (ApiException | InterruptedException | IOException e) {
+                    e.printStackTrace();
                 }
             }
-            // compute the average duration in traffic
-            optimisticTimeAvg.add(toReadableTime(getAverage(optimisticTime)));
-            pessimisticTimeAvg.add(toReadableTime(getAverage(pessimisticTime)));
+
+            optimisticTimeList.add(toReadableTime(optimisticTime));
+            pessimisticTimeList.add(toReadableTime(pessimisticTime));
 
             // update the duration of the last trip
-            lastOptimisticDuration = getAverage(optimisticTime);
-            lastPessimisticDuration = getAverage(pessimisticTime);
+            lastOptimisticDuration = optimisticTime;
+            lastPessimisticDuration = pessimisticTime;
+
         }
         this.context.shutdown();
 
@@ -175,10 +178,9 @@ public class DistanceMatrixClient {
         return TravelTimeResponse.builder()
                 .nodes(nodes)
                 .travelModes(route.getTravelModes())
-                .optimisticTime(optimisticTimeAvg)
-                .pessimisticTime(pessimisticTimeAvg)
+                .optimisticTime(optimisticTimeList)
+                .pessimisticTime(pessimisticTimeList)
                 .fare(fare)
                 .build();
     }
-
 }
