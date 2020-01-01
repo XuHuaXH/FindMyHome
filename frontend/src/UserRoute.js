@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from "@material-ui/core/Typography"
+import RouteInputForm from "./RouteInputForm"
 
 
 
@@ -22,8 +23,7 @@ class UserRoute extends React.Component {
         this.state = {
             commuteRoutes:[],
             dialogIsOpen: false,
-            nodeInputForms: [],
-            addressList: []
+            nodeInfoList: []
         }
     }
 
@@ -75,41 +75,15 @@ class UserRoute extends React.Component {
     handleClose = () => {
         this.setState({
             dialogIsOpen: false
-        })
-    };
-
-    addNode = () => {
-
-        // add new input field to the form
-        let addressIndex = this.state.addressList.length;
-        let newInput =
-            <div>
-                <Typography>Stop {addressIndex + 1}</Typography>
-                <TextField id="standard-basic" label="Address" onChange = {
-                    (event) => {
-                        const addresses = this.state.addressList;
-                        addresses[addressIndex] = event.target.value;
-                        this.setState({
-                            addressList: addresses
-                        });
-                    }
-                }/>
-            </div>;
-        this.setState(prevState => ({
-            nodeInputForms: prevState.nodeInputForms.concat([newInput]),
-            addressList: prevState.addressList.concat([""])
-        }));
-    }
-
-    handleAddressChange = (event, newValue, addressIndex) => {
-        const addresses = this.state.addressList;
-        addresses[addressIndex] = newValue;
-        this.setState({
-            addressList: addresses
         });
-        console.log("new value is " + newValue);
     }
 
+    fillNodeInfoList = (list) => {
+        this.setState({
+            nodeInfoList: list
+        });
+        // TODO: make remote call to backend API
+    }
 
 
     render() {
@@ -123,28 +97,10 @@ class UserRoute extends React.Component {
                 </div>
                 <Dialog open={this.state.dialogIsOpen} onClose={() => this.handleClose()} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Add a new route</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Fill out this form to add a new route to your profile.
-                            The estimated commute time of this route will appear when you view each property.
-                        </DialogContentText>
-                        <form style={styles.form}>
-                            <TextField id="standard-basic" label="Name" />
-                            <TextField id="standard-basic" label="Departure Time" />
-                            {this.state.nodeInputForms}
-                            <Button variant="contained" color="primary" style={styles} onClick={() => this.addNode()}>
-                                Add a stop
-                            </Button>
-                        </form>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClose={() => this.handleClose()} color="primary">
-                            Cancel
-                        </Button>
-                        <Button onClose={() => this.handleClose()} color="primary">
-                            Save
-                        </Button>
-                    </DialogActions>
+                        <RouteInputForm
+                            handleClose={this.handleClose()}
+                            fillNodeInfoList={this.fillNodeInfoList()}
+                        />
                 </Dialog>
                 <Grid style={styles.grid} container spacing={3}>
                     {this.state.commuteRoutes}
