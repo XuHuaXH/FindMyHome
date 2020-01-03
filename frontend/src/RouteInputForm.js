@@ -13,6 +13,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from "@material-ui/core/Typography"
 import {node} from "prop-types"
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from "@material-ui/core/FormControlLabel"
 
 class RouteInputForm extends React.Component {
 
@@ -20,7 +22,11 @@ class RouteInputForm extends React.Component {
         super(props);
         this.state = {
             nextAvailableId: 1,
-            nodeInfoList: []
+            nodeInfoList: [],
+            routeName: '',
+            departureTime: '',
+            day: '',
+            selectedRadio: 0
         }
     }
 
@@ -43,20 +49,19 @@ class RouteInputForm extends React.Component {
         console.log("now the form has " + this.state.nextAvailableId + " nodes");
     }
 
-    handleClose = () => {
-        this.setState({
-            dialogIsOpen: false
-        });
-    }
-
-    fillNodeInfoList = () => {
+    fillRouteInfo = () => {
+        this.props.fillRouteName(this.state.name);
+        this.props.fillDepartureTime(this.state.departureTime);
+        this.props.fillTravelDay(this.state.day);
+        this.props.fillHomeIndex(this.state.selectedRadio);
         this.props.fillNodeInfoList(this.state.nodeInfoList);
     }
 
     handleSave = () => {
-        this.fillNodeInfoList();
-        this.handleClose();
+        this.fillRouteInfo();
+        this.props.closeAction();
     }
+
 
     render() {
         return(
@@ -66,13 +71,49 @@ class RouteInputForm extends React.Component {
                         Fill out this form to add a new route to your profile.
                         The estimated commute time of this route will appear when you view each property.
                     </DialogContentText>
-                        <form style={styles.form}>
-                            <TextField id="standard-basic" label="Name" />
-                            <TextField id="standard-basic" label="Departure Time" />
+                            <TextField style={styles.form} id="standard-basic" label="Name" onChange = {
+                                (event) => {
+                                    this.setState({
+                                        routeName: event.target.value
+                                    });
+                                }
+                            }/>
+                            <TextField style={styles.form} id="standard-basic" label="Departure Time" onChange = {
+                                (event) => {
+                                    this.setState({
+                                        departureTime: event.target.value
+                                    });
+                                }
+                            }/>
+                            <TextField style={styles.form} id="standard-basic" label="Traveling on" onChange = {
+                                (event) => {
+                                    this.setState({
+                                        day: event.target.value
+                                    });
+                                }
+                            }/>
+                            <Grid style={styles.grid} container spacing={3}>
                             {this.state.nodeInfoList.map((form, index) => (
+                                <Grid item xs={6}>
                                 <div key={index}>
                                     <Typography>Stop {index + 1}</Typography>
-                                    <TextField id="standard-basic" label="Address" onChange = {
+                                    <TextField style={{display: index === 0 ? 'none' : 'block'}}
+                                               id="standard-basic"
+                                               label="Travel Mode"
+                                               onChange = {
+                                        (event) => {
+                                            let nodeInfoList = this.state.nodeInfoList;
+                                            nodeInfoList[index].travelMode = event.target.value;
+                                            this.setState({
+                                                nodeInfoList: nodeInfoList
+                                            });
+                                            console.log("the " + index + "th item in the list changed");
+                                        }
+                                    }/>
+                                    <TextField  disabled={this.state.selectedRadio === index}
+                                                id='standard-basic'
+                                                label="Address"
+                                                onChange = {
                                         (event) => {
                                             let nodeInfoList = this.state.nodeInfoList;
                                             nodeInfoList[index].address = event.target.value;
@@ -83,14 +124,20 @@ class RouteInputForm extends React.Component {
                                         }
                                     }/>
                                 </div>
+                                    <FormControlLabel control={<Radio
+                                        checked={this.state.selectedRadio === index}
+                                        onChange={() => this.setState({
+                                        selectedRadio: index
+                                    })} />} label="Select as Home" />
+                                </Grid>
                             ))}
+                            </Grid>
                             <Button variant="contained" color="primary" style={styles} onClick={() => this.addNode()}>
                                 Add a stop
                             </Button>
-                        </form>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => this.props.handleClose} color="primary">
+                    <Button onClick={this.props.closeAction} color="primary">
                         Cancel
                     </Button>
                     <Button onClick={() => this.handleSave()} color="primary">
@@ -109,7 +156,7 @@ const styles = {
     },
     form: {
         margin: 10,
-        width: 200
+        width: 150
     },
     grid: {
         padding: 15

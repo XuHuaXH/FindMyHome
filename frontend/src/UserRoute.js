@@ -23,7 +23,11 @@ class UserRoute extends React.Component {
         this.state = {
             commuteRoutes:[],
             dialogIsOpen: false,
-            nodeInfoList: []
+            nodeInfoList: [],
+            routeName: '',
+            departureTime: '',
+            day: '',
+            homeIndex: ''
         }
     }
 
@@ -82,7 +86,35 @@ class UserRoute extends React.Component {
         this.setState({
             nodeInfoList: list
         });
-        // TODO: make remote call to backend API
+        this.sendRouteForm();
+    }
+
+    fillRouteName = (name) => {
+        this.setState({
+            name: name
+        });
+    }
+
+    fillDepartureTime = (time) => {
+        this.setState({
+            departureTime: time
+        });
+    }
+
+    fillTravelDay = (day) => {
+        this.setState({
+            day: day
+        });
+    }
+    
+    fillHomeIndex = (index) => {
+        this.setState({
+            homeIndex: index
+        });
+    }
+
+    sendRouteForm = () => {
+
     }
 
 
@@ -98,8 +130,12 @@ class UserRoute extends React.Component {
                 <Dialog open={this.state.dialogIsOpen} onClose={() => this.handleClose()} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Add a new route</DialogTitle>
                         <RouteInputForm
-                            handleClose={this.handleClose()}
-                            fillNodeInfoList={this.fillNodeInfoList()}
+                            closeAction={this.handleClose}
+                            fillNodeInfoList={this.fillNodeInfoList}
+                            fillRouteName={this.fillRouteName}
+                            fillDepartureTime={this.fillDepartureTime}
+                            fillTravelDay={this.fillTravelDay}
+                            fillHomeIndex={this.fillHomeIndex}
                         />
                 </Dialog>
                 <Grid style={styles.grid} container spacing={3}>
