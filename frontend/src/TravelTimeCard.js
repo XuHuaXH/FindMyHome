@@ -68,7 +68,7 @@ class TravelTimeCard extends React.Component {
             if (node.name === "home") {
                 address = "Home";
             } else {
-                address = this.addressToString(node.address);
+                address = node.simpleAddress.address;
             }
             displayedNodes.push(
                 <Step active="true">
@@ -92,7 +92,7 @@ class TravelTimeCard extends React.Component {
         if (node.name === "home") {
             address = "Home";
         } else {
-            address = this.addressToString(node.address);
+            address = node.simpleAddress.address;
         }
         displayedNodes.push(
             <Step active="true">
@@ -140,12 +140,6 @@ class TravelTimeCard extends React.Component {
                 </Card>
             </MuiThemeProvider>
         );
-    }
-
-    addressToString = (address) => {
-        return address.streetNo + " " + address.roadName + ", "
-            + address.city + ", " + address.state + " "
-            + address.zipCode
     }
 
 }

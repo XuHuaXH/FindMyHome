@@ -34,7 +34,7 @@ class RouteCard extends React.Component {
             if (node.name === "home") {
                 address = "Home";
             } else {
-                address = this.addressToString(node.address);
+                address = node.simpleAddress.address;
             }
             displayedNodes.push(
                 <Step active="true">
@@ -58,7 +58,7 @@ class RouteCard extends React.Component {
         if (node.name === "home") {
             address = "Home";
         } else {
-            address = this.addressToString(node.address);
+            address = node.simpleAddress.address;
         }
         displayedNodes.push(
             <Step active="true">
@@ -128,12 +128,6 @@ class RouteCard extends React.Component {
             .catch(function (error) {
                 console.log(error);
             });
-    }
-
-    addressToString = (address) => {
-        return address.streetNo + " " + address.roadName + ", "
-            + address.city + ", " + address.state + " "
-            + address.zipCode
     }
 
 }

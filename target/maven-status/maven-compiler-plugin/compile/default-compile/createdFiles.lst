@@ -1,5 +1,7 @@
 FLAGCamp/FindMyHome/Util/GeoLocation.class
+FLAGCamp/FindMyHome/model/SimpleAddress$SimpleAddressBuilder.class
 FLAGCamp/FindMyHome/JWT/JWTUserAuthHelper.class
 FLAGCamp/FindMyHome/controller/SearchController.class
 FLAGCamp/FindMyHome/service/SearchService.class
+FLAGCamp/FindMyHome/model/SimpleAddress.class
 FLAGCamp/FindMyHome/controller/ImageController.class

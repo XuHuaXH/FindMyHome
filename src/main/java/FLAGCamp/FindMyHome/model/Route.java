@@ -35,5 +35,4 @@ public class Route {
     @ManyToOne
     @JsonIgnore
     private User user;
-
 }

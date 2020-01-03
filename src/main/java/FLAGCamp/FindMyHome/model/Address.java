@@ -30,12 +30,31 @@ public class Address {
     private double longitude;
     private long zone;
 
-    @OneToOne
-    @JsonIgnore
-    private Node node;
+//    @OneToOne
+//    @JsonIgnore
+//    private Node node;
 
     @OneToOne
     @JsonIgnore
     private Property property;
+
+    public String toOneLineAddress() {
+        StringBuilder bd = new StringBuilder();
+        bd.append(streetNo).append(" ")
+                .append(roadName).append(", ")
+                .append(city).append(", ")
+                .append(state).append(" ")
+                .append(zipCode);
+
+        return bd.toString();
+    }
+
+    public SimpleAddress toSimpleAddress() {
+        return SimpleAddress.builder()
+                .address(this.toOneLineAddress())
+                .latitude(this.latitude)
+                .longitude(this.longitude)
+                .build();
+    }
 
 }

@@ -13,19 +13,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "node")
-public class Node {
+@Table(name = "simple_address")
+public class SimpleAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonIgnore
     private int id;
-    private String name;
+    private String address;
+    private double latitude;
+    private double longitude;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private SimpleAddress simpleAddress;
-
-    @ManyToOne
+    @OneToOne
     @JsonIgnore
-    private Route route;
+    private Node node;
 }

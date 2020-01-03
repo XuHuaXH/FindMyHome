@@ -85,8 +85,8 @@ public class DistanceMatrixClient {
             nodes.add(originNode);
             node = route.getNodes().get(i + 1);
             Node destinationNode = node.getName().equals("home") ? home : node;
-            LatLng originLatLng = new LatLng(originNode.getAddress().getLatitude(), originNode.getAddress().getLongitude());
-            LatLng destinationLatLng = new LatLng(destinationNode.getAddress().getLatitude(), destinationNode.getAddress().getLongitude());
+            LatLng originLatLng = new LatLng(originNode.getSimpleAddress().getLatitude(), originNode.getSimpleAddress().getLongitude());
+            LatLng destinationLatLng = new LatLng(destinationNode.getSimpleAddress().getLatitude(), destinationNode.getSimpleAddress().getLongitude());
 
 
             //set up travel_mode

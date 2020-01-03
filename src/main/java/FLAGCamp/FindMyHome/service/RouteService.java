@@ -62,7 +62,7 @@ public class RouteService {
         }
 
         Property property = propertyRepo.findById(propertyId).get();
-        Node home = Node.builder().name("home").address(property.getAddress()).build();
+        Node home = Node.builder().name("home").simpleAddress(property.getAddress().toSimpleAddress()).build();
 
         List<Route> routes = getRoutes(emailId);
 
