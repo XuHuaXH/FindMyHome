@@ -40,7 +40,7 @@ public class Route {
     public void addNodeCoordinates() {
         for (Node node : this.nodes) {
             if (node.getName().equals("home")) {
-                return;
+                continue;
             }
             SimpleAddress address = node.getSimpleAddress();
             String keyword = address.getAddress();

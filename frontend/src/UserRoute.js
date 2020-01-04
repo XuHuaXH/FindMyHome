@@ -42,6 +42,7 @@ class UserRoute extends React.Component {
             .then((response) => {
                 console.log(response);
             })
+            .then(() => this.renderRoutes())
             .catch((error) => {
                 console.log(error);
             });

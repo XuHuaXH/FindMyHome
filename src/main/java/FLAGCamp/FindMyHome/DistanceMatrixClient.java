@@ -145,7 +145,12 @@ public class DistanceMatrixClient {
                     DistanceMatrix matrix = req.await();
                     for (DistanceMatrixRow row : matrix.rows) {
                         for (DistanceMatrixElement element : row.elements) {
-                            Long duration = element.durationInTraffic.inSeconds;
+                            long duration;
+                            if (travelMode == TravelMode.DRIVING) {
+                                duration = element.durationInTraffic.inSeconds;
+                            } else {
+                                duration = element.duration.inSeconds;
+                            }
                             if (trafficModel == TrafficModel.OPTIMISTIC) {
                                 optimisticTime = duration;
                                 fare.add((element.fare == null) ? new BigDecimal(0) : element.fare.value);

@@ -50,8 +50,6 @@ public class AddressCoordinateHelper {
             }
             reader.close();
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
