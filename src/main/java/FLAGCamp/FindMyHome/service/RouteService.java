@@ -27,6 +27,7 @@ public class RouteService {
         if (route.getId() == null) {
             // add a new route for the user
             route.setUser(user);
+            route.addNodeCoordinates();
             routeRepo.save(route);
             return "saved";
         } else if (!routeRepo.findById(route.getId()).isPresent()) {
@@ -36,6 +37,7 @@ public class RouteService {
             Route original = routeRepo.findById(route.getId()).get();
             if (original.getUser().equals(user)) {
                 route.setUser(user);
+                route.addNodeCoordinates();
                 routeRepo.save(route);
                 return "updated";
             } else {

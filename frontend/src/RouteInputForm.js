@@ -49,16 +49,39 @@ class RouteInputForm extends React.Component {
         console.log("now the form has " + this.state.nextAvailableId + " nodes");
     }
 
-    fillRouteInfo = () => {
-        this.props.fillRouteName(this.state.name);
-        this.props.fillDepartureTime(this.state.departureTime);
-        this.props.fillTravelDay(this.state.day);
-        this.props.fillHomeIndex(this.state.selectedRadio);
-        this.props.fillNodeInfoList(this.state.nodeInfoList);
+
+    sendRouteObject = () => {
+        let nodeInfoList = this.state.nodeInfoList;
+        let travelModes = [];
+        let nodes = [];
+        for (let i = 0; i < nodeInfoList.length; ++i) {
+            let node = {
+                "name" : this.state.selectedRadio === i ? "home" : nodeInfoList[i].id,
+                "simpleAddress" : {
+                    "address": nodeInfoList[i].address
+                }
+            };
+            nodes.push(node);
+            if (i !== 0) {
+                travelModes.push(nodeInfoList[i].travelMode);
+            }
+        }
+        let days = [];
+        days.push(this.state.day);
+        console.log("days is " + days);
+
+        let route = {
+            name: this.state.routeName,
+            departureTime: this.state.departureTime,
+            days: days,
+            travelModes: travelModes,
+            nodes: nodes
+        };
+        this.props.routeObjectCallback(route);
     }
 
     handleSave = () => {
-        this.fillRouteInfo();
+        this.sendRouteObject();
         this.props.closeAction();
     }
 

@@ -27,8 +27,24 @@ class UserRoute extends React.Component {
             routeName: '',
             departureTime: '',
             day: '',
-            homeIndex: ''
+            homeIndex: '',
+            route: ''
         }
+    }
+
+    sendRouteForm = () => {
+        let url = "/api/route";
+        let token = localStorage.getItem("token");
+        let options = {
+            headers: {'Authorization': token}
+        };
+        axios.post(url, this.state.route, options)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     componentDidMount() {
@@ -85,26 +101,28 @@ class UserRoute extends React.Component {
     fillNodeInfoList = (list) => {
         this.setState({
             nodeInfoList: list
-        });
-        this.sendRouteForm();
+        }, this.sendRouteForm);
     }
 
     fillRouteName = (name) => {
         this.setState({
             name: name
         });
+        console.log("route name set to " + name);
     }
 
     fillDepartureTime = (time) => {
         this.setState({
             departureTime: time
         });
+        console.log("departureTime set to " + time);
     }
 
     fillTravelDay = (day) => {
         this.setState({
             day: day
         });
+        console.log("travel day set to " + day);
     }
     
     fillHomeIndex = (index) => {
@@ -113,9 +131,12 @@ class UserRoute extends React.Component {
         });
     }
 
-    sendRouteForm = () => {
-
+    setRouteObject = (route) => {
+        this.setState({
+            route: route
+        }, this.sendRouteForm);
     }
+
 
 
     render() {
@@ -131,11 +152,13 @@ class UserRoute extends React.Component {
                     <DialogTitle id="form-dialog-title">Add a new route</DialogTitle>
                         <RouteInputForm
                             closeAction={this.handleClose}
-                            fillNodeInfoList={this.fillNodeInfoList}
-                            fillRouteName={this.fillRouteName}
-                            fillDepartureTime={this.fillDepartureTime}
-                            fillTravelDay={this.fillTravelDay}
-                            fillHomeIndex={this.fillHomeIndex}
+                            nodeInfoListCallback={this.fillNodeInfoList}
+                            routeNameCallback={this.fillRouteName}
+                            departureTimeCallback={this.fillDepartureTime}
+                            travelDayCallback={this.fillTravelDay}
+                            homeIndexCallback={this.fillHomeIndex}
+                            sendRouteFormCallback={this.sendRouteForm}
+                            routeObjectCallback={this.setRouteObject}
                         />
                 </Dialog>
                 <Grid style={styles.grid} container spacing={3}>

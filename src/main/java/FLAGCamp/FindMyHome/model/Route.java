@@ -1,5 +1,6 @@
 package FLAGCamp.FindMyHome.model;
 
+import FLAGCamp.FindMyHome.Util.AddressCoordinateHelper;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -35,4 +36,20 @@ public class Route {
     @ManyToOne
     @JsonIgnore
     private User user;
+
+    public void addNodeCoordinates() {
+        for (Node node : this.nodes) {
+            if (node.getName().equals("home")) {
+                return;
+            }
+            SimpleAddress address = node.getSimpleAddress();
+            String keyword = address.getAddress();
+            double[] coordinates = AddressCoordinateHelper.AddressToLatLong(keyword);
+            if (coordinates != null) {
+                address.setLatitude(coordinates[0]);
+                address.setLongitude(coordinates[1]);
+                node.setSimpleAddress(address);
+            }
+        }
+    }
 }
