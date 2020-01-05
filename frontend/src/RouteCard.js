@@ -90,11 +90,9 @@ class RouteCard extends React.Component {
                             Name: {route.name}
                         </Typography>
                         <Typography style={styles.title} color="textSecondary">
-                            Leaving at {route.departureTime}
+                            Leaving on {route.days[0]} <br/>
+                            at {route.departureTime}
                         </Typography>
-                        {/*<Typography style={styles.title} color="textSecondary">*/}
-                        {/*    Frequency: {frequency}*/}
-                        {/*</Typography>*/}
                         <Stepper orientation="vertical">
                             {this.state.displayedNodes}
                         </Stepper>

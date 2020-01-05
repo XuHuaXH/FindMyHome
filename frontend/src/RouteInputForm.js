@@ -15,6 +15,11 @@ import Typography from "@material-ui/core/Typography"
 import {node} from "prop-types"
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from "@material-ui/core/FormControlLabel"
+import FormControl from "@material-ui/core/FormControl"
+import Select from "@material-ui/core/Select"
+import MenuItem from "@material-ui/core/MenuItem"
+import FormHelperText from "@material-ui/core/FormHelperText"
+import InputLabel from "@material-ui/core/InputLabel"
 
 class RouteInputForm extends React.Component {
 
@@ -94,46 +99,73 @@ class RouteInputForm extends React.Component {
                         Fill out this form to add a new route to your profile.
                         The estimated commute time of this route will appear when you view each property.
                     </DialogContentText>
-                            <TextField style={styles.form} id="standard-basic" label="Name" onChange = {
-                                (event) => {
-                                    this.setState({
-                                        routeName: event.target.value
-                                    });
-                                }
-                            }/>
-                            <TextField style={styles.form} id="standard-basic" label="Departure Time" onChange = {
-                                (event) => {
-                                    this.setState({
-                                        departureTime: event.target.value
-                                    });
-                                }
-                            }/>
-                            <TextField style={styles.form} id="standard-basic" label="Traveling on" onChange = {
+                    <TextField style={styles.form} id="standard-basic" label="Name" onChange = {
+                        (event) => {
+                            this.setState({
+                                routeName: event.target.value
+                            });
+                        }
+                    }/>
+                    <TextField style={styles.form} id="standard-basic" label="Departure Time" onChange = {
+                        (event) => {
+                            this.setState({
+                                departureTime: event.target.value
+                            });
+                        }
+                    }/>
+                    <FormControl style={styles.form}>
+                        <InputLabel id="demo-simple-select-label">Traveling on</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            onChange ={
                                 (event) => {
                                     this.setState({
                                         day: event.target.value
                                     });
                                 }
-                            }/>
+                            }
+                        >
+                            <MenuItem value="Monday">Monday</MenuItem>
+                            <MenuItem value="Tuesday">Tuesday</MenuItem>
+                            <MenuItem value="Wednesday">Wednesday</MenuItem>
+                            <MenuItem value="Thursday">Thursday</MenuItem>
+                            <MenuItem value="Friday">Friday</MenuItem>
+                            <MenuItem value="Saturday">Saturday</MenuItem>
+                            <MenuItem value="Sunday">Sunday</MenuItem>
+                        </Select>
+                    </FormControl>
                             <Grid style={styles.grid} container spacing={3}>
                             {this.state.nodeInfoList.map((form, index) => (
                                 <Grid item xs={6}>
                                 <div key={index}>
-                                    <Typography>Stop {index + 1}</Typography>
-                                    <TextField style={{display: index === 0 ? 'none' : 'block'}}
-                                               id="standard-basic"
-                                               label="Travel Mode"
-                                               onChange = {
-                                        (event) => {
-                                            let nodeInfoList = this.state.nodeInfoList;
-                                            nodeInfoList[index].travelMode = event.target.value;
-                                            this.setState({
-                                                nodeInfoList: nodeInfoList
-                                            });
-                                            console.log("the " + index + "th item in the list changed");
-                                        }
-                                    }/>
+                                    <Typography style={{marginLeft: 15}}>Stop {index + 1}</Typography>
+                                    <FormControl
+                                        disabled={index === 0}
+                                        style={styles.form}>
+                                        <InputLabel id="demo-simple-select-label">Travel Mode</InputLabel>
+                                        <Select
+                                            labelId="demo-simple-select-label"
+                                            id="demo-simple-select"
+                                                       onChange = {
+                                                           (event) => {
+                                                               let nodeInfoList = this.state.nodeInfoList;
+                                                               nodeInfoList[index].travelMode = event.target.value;
+                                                               this.setState({
+                                                                   nodeInfoList: nodeInfoList
+                                                               });
+                                                               console.log("the " + index + "th item in the list changed");
+                                                           }
+                                                       }
+                                            >
+                                                    <MenuItem value="driving">driving</MenuItem>
+                                                    <MenuItem value="transit">transit</MenuItem>
+                                                    <MenuItem value="walking">walking</MenuItem>
+                                                    <MenuItem value="bicycling">bicycling</MenuItem>
+                                        </Select>
+                                    </FormControl>
                                     <TextField  disabled={this.state.selectedRadio === index}
+                                                style={styles.form}
                                                 id='standard-basic'
                                                 label="Address"
                                                 onChange = {
@@ -148,14 +180,19 @@ class RouteInputForm extends React.Component {
                                     }/>
                                 </div>
                                     <FormControlLabel control={<Radio
+                                        style={{marginLeft: 15}}
                                         checked={this.state.selectedRadio === index}
                                         onChange={() => this.setState({
                                         selectedRadio: index
-                                    })} />} label="Select as Home" />
+                                    })} />} label="Select as Home"/>
                                 </Grid>
                             ))}
                             </Grid>
-                            <Button variant="contained" color="primary" style={styles} onClick={() => this.addNode()}>
+                            <Button
+                                variant="contained"
+                                style={{marginLeft: 15}}
+                                color="primary"
+                                onClick={() => this.addNode()}>
                                 Add a stop
                             </Button>
                 </DialogContent>
@@ -173,17 +210,17 @@ class RouteInputForm extends React.Component {
 }
 
 const styles = {
-    margin: 15,
     root: {
         flexGrow: 1,
     },
     form: {
-        margin: 10,
+        marginLeft: 15,
+        marginRight: 15,
         width: 150
     },
     grid: {
         padding: 15
-    }
+    },
 };
 
 
