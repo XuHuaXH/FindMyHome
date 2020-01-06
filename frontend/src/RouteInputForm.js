@@ -141,8 +141,7 @@ class RouteInputForm extends React.Component {
                                 <div key={index}>
                                     <Typography style={{marginLeft: 15}}>Stop {index + 1}</Typography>
                                     <FormControl
-                                        disabled={index === 0}
-                                        style={styles.form}>
+                                        style={index === 0 ? styles.noTravelMode : styles.travelMode}>
                                         <InputLabel id="demo-simple-select-label">Travel Mode</InputLabel>
                                         <Select
                                             labelId="demo-simple-select-label"
@@ -158,16 +157,16 @@ class RouteInputForm extends React.Component {
                                                            }
                                                        }
                                             >
-                                                    <MenuItem value="driving">driving</MenuItem>
-                                                    <MenuItem value="transit">transit</MenuItem>
-                                                    <MenuItem value="walking">walking</MenuItem>
-                                                    <MenuItem value="bicycling">bicycling</MenuItem>
+                                                    <MenuItem value="driving">driving to</MenuItem>
+                                                    <MenuItem value="transit">transit to</MenuItem>
+                                                    <MenuItem value="walking">walking to</MenuItem>
+                                                    <MenuItem value="bicycling">bicycling to</MenuItem>
                                         </Select>
                                     </FormControl>
                                     <TextField  disabled={this.state.selectedRadio === index}
                                                 style={styles.form}
                                                 id='standard-basic'
-                                                label="Address"
+                                                label={this.state.selectedRadio === index ? "Home" : "Address"}
                                                 onChange = {
                                         (event) => {
                                             let nodeInfoList = this.state.nodeInfoList;
@@ -217,6 +216,18 @@ const styles = {
         marginLeft: 15,
         marginRight: 15,
         width: 150
+    },
+    travelMode: {
+        marginLeft: 15,
+        marginRight: 15,
+        width: 150,
+        visibility: 'visible'
+    },
+    noTravelMode: {
+        marginLeft: 15,
+        marginRight: 15,
+        width: 150,
+        visibility: 'hidden'
     },
     grid: {
         padding: 15

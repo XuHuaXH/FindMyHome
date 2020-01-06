@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import axios from "axios";
 
 
 import {
@@ -28,6 +29,27 @@ class RouterPage extends React.Component {
         const isLoggedIn = localStorage.getItem("token") != null;
         this.state = {
             isLoggedIn: isLoggedIn
+        }
+    }
+
+    componentDidMount() {
+        // check if user token has expired
+        if (localStorage.getItem("token") !== null) {
+            let url = "/hello/name";
+            let token = localStorage.getItem("token");
+            let options = {
+                headers: {'Authorization': token}
+            };
+
+            axios.get(url, options)
+                .then((response) => {
+                    if (response !== null && response.status === 500) {
+                        this.logout();
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
         }
     }
 
