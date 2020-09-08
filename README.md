@@ -2,7 +2,7 @@
 
 A real estate search platform for finding apartments and homes for rent/sale built with [Spring Boot](https://spring.io/projects/spring-boot) and [React](https://reactjs.org). The frontend uses components from [Material-UI](https://material-ui.com).
 
-[Project Demo](http://13.57.246.109:8080) 
+[Project Demo](http://52.8.125.34:8080) 
  - Username: demo@findmyhome.com 
  - Password: password
 
