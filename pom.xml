@@ -8,7 +8,7 @@
         <version>2.2.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>FLAGCamp</groupId>
+    <groupId>src</groupId>
     <artifactId>FindMyHome</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>FindMyHome</name>
